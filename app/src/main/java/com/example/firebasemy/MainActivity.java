@@ -3,6 +3,7 @@ package com.example.firebasemy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,7 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     EditText txtId, txtName, txtAdd, txtConNo;
-    Button btnSave, btnShow, btnUpdate, btnDelete, btnclear;
+    Button btnSave, btnShow, btnUpdate, btnDelete, btnclear, btnplay;
+    MediaPlayer mp;
     DatabaseReference dbref;
     Student std;
 
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.updateosa);
         btnDelete = findViewById(R.id.deleteosa);
         btnclear = findViewById(R.id.clearosa);
+
+        btnplay = findViewById(R.id.playosa);
 
         std = new Student();
 
@@ -172,6 +176,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void playsound(View v){
+        mp = MediaPlayer.create(this,R.raw.sound);
+
+        mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mp.start();
+            }
+        });
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mp.release();
+            }
+        });
+
+    }
 
 
     private void clearControls(){
